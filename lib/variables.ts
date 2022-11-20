@@ -1,10 +1,7 @@
 // Types
 import { SignatureColor, SignatureFont } from "@/app/types/types";
 
-export const BASE_URL =
-    process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://billora.dev";
+export const BASE_URL = "https://billora.dev";
 
 /**
  * I18N variables
