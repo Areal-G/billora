@@ -2,6 +2,7 @@
 import { SignatureColor, SignatureFont } from "@/app/types/types";
 
 export const BASE_URL = "https://billora.dev";
+export const AUTHOR_WEBSITE = "https://billora.dev";
 
 /**
  * API endpoints
