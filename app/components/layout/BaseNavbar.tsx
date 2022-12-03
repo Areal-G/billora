@@ -28,6 +28,7 @@ const BaseNavbar = () => {
                             alt="Billora Logo"
                             width={190}
                             height={100}
+                            loading="eager"
                         />
                     </Link>
                     {/* ? DEV Only */}
