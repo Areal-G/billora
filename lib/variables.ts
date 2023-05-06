@@ -29,7 +29,7 @@ export const CURRENCIES_API =
  * Chromium for Puppeteer
  */
 export const CHROMIUM_EXECUTABLE_PATH =
-    "https://github.com/Sparticuz/chromium/releases/download/v119.0.0/chromium-v119.0.0-pack.tar";
+    "https://github.com/Sparticuz/chromium/releases/download/v122.0.0/chromium-v122.0.0-pack.tar";
 
 /**
  * Tailwind
@@ -54,6 +54,7 @@ export const NODEMAILER_PW = process.env.NODEMAILER_PW;
 export const LOCALES = [
     { code: "en", name: "English" },
     { code: "de", name: "German" },
+    { code: "es", name: "Español"}
 ];
 export const DEFAULT_LOCALE = LOCALES[0].code;
 
