@@ -11,6 +11,7 @@ export const ENV = process.env.NODE_ENV;
  */
 export const BASE_URL = "https://billora.dev";
 export const AUTHOR_WEBSITE = "https://billora.dev";
+export const AUTHOR_GITHUB = "https://github.com/areal";
 
 /**
  * API endpoints
