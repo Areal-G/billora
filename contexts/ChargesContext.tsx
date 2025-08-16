@@ -49,7 +49,7 @@ type ChargesContextProps = {
 };
 
 export const ChargesContextProvider = ({ children }: ChargesContextProps) => {
-    const { control, setValue } = useFormContext<InvoiceType>();
+    const { control, setValue, getValues } = useFormContext<InvoiceType>();
 
     // Form Fields
     const itemsArray = useWatch({
@@ -164,6 +164,7 @@ export const ChargesContextProvider = ({ children }: ChargesContextProps) => {
         tax?.amount,
         shippingType,
         shipping?.cost,
+        currency,
     ]);
 
     /**
@@ -181,10 +182,16 @@ export const ChargesContextProvider = ({ children }: ChargesContextProps) => {
         setValue("details.subTotal", totalSum);
         setSubTotal(totalSum);
 
-        let discountAmount: number =
-            parseFloat(discount!.amount.toString()) ?? 0;
-        let taxAmount: number = parseFloat(tax!.amount.toString()) ?? 0;
-        let shippingCost: number = parseFloat(shipping!.cost.toString()) ?? 0;
+        /*
+         * The `?? 0` these carried was dead: parseFloat returns NaN for bad
+         * input, and `??` only guards null/undefined. The isNaN checks below
+         * are what actually handle it, so the fallback is dropped rather than
+         * replaced — defaulting to 0 here would change behaviour by making the
+         * guarded blocks run (and setValue) on invalid input.
+         */
+        const discountAmount: number = parseFloat(discount!.amount.toString());
+        const taxAmount: number = parseFloat(tax!.amount.toString());
+        const shippingCost: number = parseFloat(shipping!.cost.toString());
 
         let discountAmountType: string = "amount";
         let taxAmountType: string = "amount";
@@ -232,9 +239,9 @@ export const ChargesContextProvider = ({ children }: ChargesContextProps) => {
         setValue("details.shippingDetails.costType", shippingCostType);
 
         setValue("details.totalAmount", total);
-
+        
         if (totalInWordsSwitch) {
-            setValue("details.totalAmountInWords", formatPriceToString(total));
+            setValue("details.totalAmountInWords", formatPriceToString(total, getValues("details.currency")));
         } else {
             setValue("details.totalAmountInWords", "");
         }
