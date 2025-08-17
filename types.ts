@@ -16,6 +16,13 @@ export type CurrencyType = {
     [currencyCode: string]: string;
 };
 
+export type CurrencyDetails = {
+    currency: string;
+    decimals: number;
+    beforeDecimal: string | null;
+    afterDecimal: string | null;
+};
+
 // Signature types
 export type SignatureColor = {
     name: string;
@@ -33,13 +40,6 @@ export enum SignatureTabs {
     TYPE = "type",
     UPLOAD = "upload",
 }
-
-// Wizard types
-export type WizardStepType = {
-    id: number;
-    label: string;
-    isValid?: boolean;
-};
 
 // Export types
 export enum ExportTypes {
