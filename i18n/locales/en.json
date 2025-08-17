@@ -136,10 +136,12 @@
     "sendToMailTooltip": "Send invoice PDF to mail",
     "importJson": "Import JSON",
     "importJsonTooltip": "Import a JSON invoice file",
-    "moreActions": "More actions"
+    "moreActions": "More actions",
+    "fitToScreen": "Fit to screen",
+    "actualSize": "Actual size"
   },
   "footer": {
-    "developedBy": "Developed by"
+    "guide": "How it works"
   },
   "voiceInput": {
     "voiceInput": "Voice Input",
@@ -213,7 +215,9 @@
     "compact": "Compact",
     "spacious": "Spacious",
     "customColor": "Custom colour",
-    "reset": "Reset"
+    "reset": "Reset",
+    "appearanceControls": "Appearance",
+    "changeAppearance": "Change the invoice's appearance"
   },
   "meta": {
     "title": "Free Invoice Generator | Billora",
@@ -224,6 +228,8 @@
   "landing": {
     "h1": "Free invoice generator",
     "intro": "Billora builds a professional invoice in your browser and hands you a PDF. Choose one of thirteen templates, set your accent colour and typeface, add your logo and signature, and download or email the result. Nothing is uploaded to an account, because there are no accounts.",
+    "guideH1": "How Billora works",
+    "guideIntro": "A walk through what the invoice generator does and how to use it: the thirteen templates, the things you can change about them, and the three steps from an empty form to a finished PDF.",
     "featuresHeading": "What you get",
     "features": {
       "1": {
@@ -286,6 +292,16 @@
     "remove": "Remove",
     "save": "Save client",
     "saveTooltip": "Save this client to reuse on your next invoice",
+    "saved": "Saved"
+  },
+  "senders": {
+    "emptyTooltip": "Save your details first to reuse them here",
+    "heading": "Saved senders",
+    "pick": "Senders",
+    "pickTooltip": "Fill these fields from a saved sender",
+    "remove": "Remove",
+    "save": "Save sender",
+    "saveTooltip": "Save these details to reuse on your next invoice",
     "saved": "Saved"
   }
 }

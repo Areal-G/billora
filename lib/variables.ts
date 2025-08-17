@@ -16,13 +16,11 @@ export const ENV = process.env.NODE_ENV;
  * Read from the environment so a preview deployment or a future custom domain
  * does not need a code change — and, more importantly, so those deployments
  * stop advertising the production URL as their canonical. Falls back to the
- * current production host. No trailing slash.
+ * local dev server. No trailing slash.
  */
 export const BASE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://billora.dev"
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
 ).replace(/\/$/, "");
-export const AUTHOR_WEBSITE = "https://billora.dev";
-export const AUTHOR_GITHUB = "https://github.com/areal";
 
 /**
  * API endpoints
@@ -70,29 +68,42 @@ export const NODEMAILER_PW = process.env.NODEMAILER_PW;
 /**
  * I18N
  */
-export const LOCALES = [
+/**
+ * Every locale the app ships, unordered. `LOCALES` below is the ordered list
+ * that the switcher, the sitemap and next-intl's routing all read.
+ */
+const LOCALE_CATALOGUE = [
   { code: "en", name: "English" },
-  // Second by request, directly below English. DEFAULT_LOCALE reads
-  // LOCALES[0].code, so English remains the default.
-  { code: "az", name: "Azərbaycanca" },
-  { code: "de", name: "Deutsch" },
+  { code: "fr", name: "Français" },
   { code: "it", name: "Italiano" },
   { code: "es", name: "Español" },
-  { code: "ca", name: "Català" },
-  { code: "fr", name: "Français" },
-  { code: "ar", name: "العربية" },
-  { code: "pl", name: "Polish" },
-  { code: "pt-BR", name: "Português (Brasil)" },
-  { code: "tr", name: "Türkçe" },
-  { code: "zh-CN", name: "简体中文" },
-  { code: "ja", name: "日本語" },
-  { code: "nb-NO", name: "Norwegian (bokmål)" },
-  { code: "nn-NO", name: "Norwegian (nynorsk)" },
-  // id.json and sr.json shipped in i18n/locales but were never registered
-  // here, so those locales were unreachable and fell back to the default.
-  { code: "id", name: "Bahasa Indonesia" },
-  { code: "sr", name: "Српски" },
-  { code: "he", name: "עברית" },
+];
+
+/**
+ * Pinned to the top of the switcher. DEFAULT_LOCALE reads LOCALES[0].code, so
+ * English must stay first.
+ */
+const PINNED_LOCALES = ["en"];
+
+/**
+ * The switcher shows each language under its own name, so that is what the
+ * order is built from — sorting by English name would look arbitrary next to
+ * "Deutsch" and "日本語".
+ *
+ * Intl.Collator's root order alphabetises the Latin-script names and then
+ * groups the remaining scripts after them (Cyrillic, Hebrew, Arabic, then
+ * Han/kana), which is a readable result for a mixed-script list. Computed once
+ * at module load rather than per render.
+ */
+const localeCollator = new Intl.Collator("en", { sensitivity: "base" });
+
+export const LOCALES = [
+  ...PINNED_LOCALES.map(
+    (code) => LOCALE_CATALOGUE.find((locale) => locale.code === code)!
+  ),
+  ...LOCALE_CATALOGUE.filter(
+    (locale) => !PINNED_LOCALES.includes(locale.code)
+  ).sort((a, b) => localeCollator.compare(a.name, b.name)),
 ];
 export const DEFAULT_LOCALE = LOCALES[0].code;
 
@@ -214,96 +225,6 @@ export const FORM_DEFAULT_VALUES = {
     additionalNotes: "",
     paymentTerms: "",
     totalAmountInWords: "",
-    pdfTemplate: 1,
-    // `as const` so fontId/density keep their literal types and satisfy the
-    // enums in ThemeSchema rather than widening to string.
-    theme: {
-      accentColor: "#4F46E5",
-      fontId: "outfit",
-      density: "comfortable",
-    } as const,
-  },
-};
-
-/**
- * ? DEV Only
- * Form auto fill values for testing
- */
-export const FORM_FILL_VALUES = {
-  sender: {
-    name: "John Doe",
-    address: "123 Main St",
-    zipCode: "12345",
-    city: "Anytown",
-    country: "USA",
-    email: "johndoe@example.com",
-    phone: "123-456-7890",
-  },
-  receiver: {
-    name: "Jane Smith",
-    address: "456 Elm St",
-    zipCode: "54321",
-    city: "Other Town",
-    country: "Canada",
-    email: "janesmith@example.com",
-    phone: "987-654-3210",
-  },
-  details: {
-    invoiceLogo: "",
-    invoiceNumber: "INV0001",
-    invoiceDate: new Date(),
-    dueDate: new Date(),
-    items: [
-      {
-        name: "Product 1",
-        description: "Description of Product 1",
-        quantity: 4,
-        unitPrice: 50,
-        total: 200,
-      },
-      {
-        name: "Product 2",
-        description: "Description of Product 2",
-        quantity: 5,
-        unitPrice: 50,
-        total: 250,
-      },
-      {
-        name: "Product 3",
-        description: "Description of Product 3",
-        quantity: 5,
-        unitPrice: 80,
-        total: 400,
-      },
-    ],
-    currency: "USD",
-    language: "English",
-    taxDetails: {
-      amount: 15,
-      amountType: "percentage",
-      taxID: "987654321",
-    },
-    discountDetails: {
-      amount: 5,
-      amountType: "percentage",
-    },
-    shippingDetails: {
-      cost: 5,
-      costType: "percentage",
-    },
-    paymentInformation: {
-      bankName: "Bank Inc.",
-      accountName: "John Doe",
-      accountNumber: "445566998877",
-    },
-    additionalNotes: "Thank you for your business",
-    paymentTerms: "Net 30",
-    signature: {
-      data: "",
-    },
-    subTotal: "850",
-    totalAmount: "850",
-    totalAmountInWords: "Eight Hundred Fifty",
     pdfTemplate: 1,
     // `as const` so fontId/density keep their literal types and satisfy the
     // enums in ThemeSchema rather than widening to string.

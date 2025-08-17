@@ -33,6 +33,7 @@ const UploadSignature = ({ handleSaveSignature }: UploadSignatureProps) => {
                     <div style={{ height: "15rem" }}>
                         {uploadSignatureImg ? (
                             <img
+                                alt="Uploaded signature"
                                 style={{
                                     borderRadius: "10px",
                                     width: "100%",

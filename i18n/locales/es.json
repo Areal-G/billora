@@ -98,10 +98,12 @@
     "exportInvoice": "Exportar Factura",
     "newInvoice": "Nueva Factura",
     "generatePdf": "Generar PDF",
-    "pdfView": "Ver PDF"
+    "pdfView": "Ver PDF",
+    "fitToScreen": "Ajustar a la pantalla",
+    "actualSize": "Tamaño real"
   },
   "footer": {
-    "developedBy": "Desarrollado por"
+    "guide": "Cómo funciona"
   },
   "invoiceDocument": {
     "invoiceNumber": "Factura n.º",

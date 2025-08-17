@@ -1,4 +1,4 @@
-import { AUTHOR_WEBSITE, BASE_URL, DEFAULT_LOCALE, LOCALES } from "@/lib/variables";
+import { BASE_URL, DEFAULT_LOCALE, LOCALES } from "@/lib/variables";
 
 export const ROOTKEYWORDS = [
     "invoice",
@@ -65,9 +65,8 @@ export function buildJsonLd(locale: string) {
             priceCurrency: "USD",
         },
         author: {
-            "@type": "Person",
-            name: "Arealov",
-            url: AUTHOR_WEBSITE,
+            "@type": "Organization",
+            name: "Billora",
         },
     };
 }

@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { BaseButton } from "@/app/components";
 
 // Icons
-import { ImageMinus, Image } from "lucide-react";
+import { ImageMinus, Image as ImageIcon } from "lucide-react";
 
 // Types
 import { NameType } from "@/types";
@@ -85,7 +85,7 @@ const FormFile = ({ name, label, placeholder }: FormFileProps) => {
                                 >
                                     <>
                                         <div className="flex flex-col items-center gap-1 px-2 text-center">
-                                            <Image
+                                            <ImageIcon
                                                 className="h-5 w-5"
                                                 aria-hidden="true"
                                             />

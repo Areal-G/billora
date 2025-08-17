@@ -152,7 +152,7 @@ export function PartyBlock({
     /** Which party this is, for click-to-edit. */
     field?: "sender" | "receiver";
 }) {
-    const { scale, locale } = ctx;
+    const { scale } = ctx;
     return (
         <div
             className={align === "right" ? "text-end" : ""}
@@ -350,28 +350,44 @@ export function TotalsBlock({
         [labels.subtotal, money(details.subTotal, details.currency, locale)],
     ];
 
+    /*
+     * Percent charges are shown as the money they add or remove, worked out
+     * in the same order as the form's total: discount on the subtotal, tax on
+     * the discounted sum, shipping on the taxed sum.
+     */
+    const cur = details.currency;
+    let running = Number(details.subTotal) || 0;
+    const charge = (raw: unknown, isAmount: boolean, sign: 1 | -1) => {
+        const n = Number(raw) || 0;
+        const value = isAmount ? n : running * (n / 100);
+        running += sign * value;
+        return value;
+    };
+    const withPct = (label: string, raw: unknown, isAmount: boolean) =>
+        isAmount ? label : `${label} (${Number(raw)}%)`;
+
     if (details.discountDetails?.amount) {
+        const isAmount = details.discountDetails.amountType === "amount";
+        const value = charge(details.discountDetails.amount, isAmount, -1);
         rows.push([
-            labels.discount,
-            details.discountDetails.amountType === "amount"
-                ? `- ${money(details.discountDetails.amount, details.currency, locale)}`
-                : `- ${details.discountDetails.amount}%`,
+            withPct(labels.discount, details.discountDetails.amount, isAmount),
+            `- ${money(value, cur, locale)}`,
         ]);
     }
     if (details.taxDetails?.amount) {
+        const isAmount = details.taxDetails.amountType === "amount";
+        const value = charge(details.taxDetails.amount, isAmount, 1);
         rows.push([
-            labels.tax,
-            details.taxDetails.amountType === "amount"
-                ? `+ ${money(details.taxDetails.amount, details.currency, locale)}`
-                : `+ ${details.taxDetails.amount}%`,
+            withPct(labels.tax, details.taxDetails.amount, isAmount),
+            `+ ${money(value, cur, locale)}`,
         ]);
     }
     if (details.shippingDetails?.cost) {
+        const isAmount = details.shippingDetails.costType === "amount";
+        const value = charge(details.shippingDetails.cost, isAmount, 1);
         rows.push([
-            labels.shipping,
-            details.shippingDetails.costType === "amount"
-                ? `+ ${money(details.shippingDetails.cost, details.currency, locale)}`
-                : `+ ${details.shippingDetails.cost}%`,
+            withPct(labels.shipping, details.shippingDetails.cost, isAmount),
+            `+ ${money(value, cur, locale)}`,
         ]);
     }
 
@@ -420,7 +436,7 @@ export function TotalsBlock({
 /* ------------------------------------------------------------------ */
 
 export function PaymentBlock({ ctx }: { ctx: PartCtx }) {
-    const { data, labels, scale, locale } = ctx;
+    const { data, labels, scale } = ctx;
     const pay = data.details.paymentInformation;
     if (!pay?.bankName && !pay?.accountName && !pay?.accountNumber) return null;
 
@@ -453,7 +469,7 @@ export function PaymentBlock({ ctx }: { ctx: PartCtx }) {
 }
 
 export function NotesBlock({ ctx }: { ctx: PartCtx }) {
-    const { data, labels, scale, locale } = ctx;
+    const { data, labels, scale } = ctx;
     const { details } = data;
     if (!details.additionalNotes && !details.paymentTerms) return null;
 
@@ -490,7 +506,7 @@ export function NotesBlock({ ctx }: { ctx: PartCtx }) {
 }
 
 export function SignatureBlock({ ctx }: { ctx: PartCtx }) {
-    const { data, labels, scale, locale } = ctx;
+    const { data, labels, scale } = ctx;
     const { details, sender } = data;
     const signature = details.signature?.data;
     if (!signature) return null;
@@ -527,7 +543,7 @@ export function SignatureBlock({ ctx }: { ctx: PartCtx }) {
 }
 
 export function ContactFooter({ ctx }: { ctx: PartCtx }) {
-    const { data, labels, scale, locale } = ctx;
+    const { data, labels, scale } = ctx;
     const { sender } = data;
     return (
         <div className={`${scale.label} text-gray-500`}>

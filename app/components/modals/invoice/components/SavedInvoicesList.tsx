@@ -32,15 +32,13 @@ const SavedInvoicesList = ({ setModalState }: SavedInvoicesListProps) => {
 
     const { reset } = useFormContext<InvoiceType>();
 
-    // TODO: Remove "any" from the function below
-    // Update fields when selected invoice is changed.
-    // ? Reason: The fields don't go through validation when invoice loads
-    const updateFields = (selected: any) => {
-        // Next 2 lines are so that when invoice loads,
-        // the dates won't be in the wrong format
-        // ? Selected cannot be of type InvoiceType because of these 2 variables
-        selected.details.dueDate = new Date(selected.details.dueDate);
-        selected.details.invoiceDate = new Date(selected.details.invoiceDate);
+    // Saved invoices store dates as strings and skip validation on load, so
+    // restore Date objects and clear the large image fields before reset().
+    const updateFields = (selected: InvoiceType) => {
+        // The date pickers work with Date objects; the schema types them as strings
+        const dates = selected.details as unknown as Record<"dueDate" | "invoiceDate", Date>;
+        dates.dueDate = new Date(selected.details.dueDate);
+        dates.invoiceDate = new Date(selected.details.invoiceDate);
 
         selected.details.invoiceLogo = "";
         selected.details.signature = {

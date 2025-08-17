@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 // Next
 import Link from "next/link";
@@ -8,6 +8,7 @@ import Image from "next/image";
 
 // Assets
 import Logo from "@/public/assets/img/billora-logo.svg";
+import LogoDark from "@/public/assets/img/billora-logo-dark.svg";
 
 // ShadCn
 import {
@@ -21,7 +22,6 @@ import {
 // Components
 import {
     BaseButton,
-    DevDebug,
     LanguageSelector,
     ThemeSwitcher,
 } from "@/app/components";
@@ -33,10 +33,6 @@ import { useTranslationContext } from "@/contexts/TranslationContext";
 import { Settings2 } from "lucide-react";
 
 const BaseNavbar = () => {
-    const devEnv = useMemo(() => {
-        return process.env.NODE_ENV === "development";
-    }, []);
-
     const [menuOpen, setMenuOpen] = useState(false);
 
     const { _t } = useTranslationContext();
@@ -48,20 +44,22 @@ const BaseNavbar = () => {
                     <Image
                         src={Logo}
                         alt="Billora Logo"
-                        width={887}
-                        height={294}
+                        width={501}
+                        height={160}
                         loading="eager"
                         priority
-                        className="h-9 w-auto sm:h-10"
+                        className="h-9 w-auto dark:hidden sm:h-10"
+                    />
+                    <Image
+                        src={LogoDark}
+                        alt="Billora Logo"
+                        width={501}
+                        height={160}
+                        loading="eager"
+                        priority
+                        className="hidden h-9 w-auto dark:block sm:h-10"
                     />
                 </Link>
-
-                {/* ? DEV Only */}
-                {devEnv && (
-                    <div className="hidden lg:block">
-                        <DevDebug />
-                    </div>
-                )}
 
                 {/* Desktop controls */}
                 <div className="hidden items-center gap-2 sm:flex">
@@ -99,8 +97,6 @@ const BaseNavbar = () => {
                                     </span>
                                     <LanguageSelector variant="block" />
                                 </div>
-
-                                {devEnv && <DevDebug />}
                             </div>
                         </SheetContent>
                     </Sheet>

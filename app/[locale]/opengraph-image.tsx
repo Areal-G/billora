@@ -1,6 +1,10 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
 import { getMessages } from "@/i18n/messages";
+import { BASE_URL } from "@/lib/variables";
 
 /**
  * Open Graph card, generated rather than committed.
@@ -27,6 +31,11 @@ export default async function OpengraphImage(props: {
         meta.ogDescription ??
         "Thirteen templates. Fill it in, download the PDF. No account.";
 
+    const mark = await readFile(
+        join(process.cwd(), "public/assets/img/billora-mark.svg")
+    );
+    const markSrc = `data:image/svg+xml;base64,${mark.toString("base64")}`;
+
     return new ImageResponse(
         (
             <div
@@ -44,23 +53,8 @@ export default async function OpengraphImage(props: {
                 }}
             >
                 <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                    <div
-                        style={{
-                            width: 56,
-                            height: 56,
-                            borderRadius: 14,
-                            background: "#6C63FF",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "#fff",
-                            fontSize: 34,
-                            fontWeight: 700,
-                        }}
-                    >
-                        I
-                    </div>
-                    <div style={{ color: "#8E88F7", fontSize: 34, fontWeight: 700 }}>
+                    <img src={markSrc} width={64} height={64} alt="" />
+                    <div style={{ color: "#FFFFFF", fontSize: 40, fontWeight: 700 }}>
                         Billora
                     </div>
                 </div>
@@ -97,7 +91,7 @@ export default async function OpengraphImage(props: {
                         fontSize: 24,
                     }}
                 >
-                    <span>billora.dev</span>
+                    <span>{new URL(BASE_URL).host}</span>
                 </div>
             </div>
         ),

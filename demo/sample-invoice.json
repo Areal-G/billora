@@ -1,0 +1,74 @@
+{
+  "sender": {
+    "name": "Northwind Studio LLC",
+    "address": "2150 Mission Street, Suite 400",
+    "zipCode": "94110",
+    "city": "San Francisco",
+    "country": "United States",
+    "email": "billing@northwind.example",
+    "phone": "+1 415 555 0142"
+  },
+  "receiver": {
+    "name": "Bluepeak Coffee Roasters",
+    "address": "88 Harbor Lane",
+    "zipCode": "98101",
+    "city": "Seattle",
+    "country": "United States",
+    "email": "accounts@bluepeak.example",
+    "phone": "+1 206 555 0187"
+  },
+  "details": {
+    "invoiceLogo": "",
+    "invoiceNumber": "NWS-2026-0142",
+    "invoiceDate": "2026-10-23T00:00:00.000Z",
+    "dueDate": "2026-11-22T00:00:00.000Z",
+    "purchaseOrderNumber": "",
+    "currency": "USD",
+    "language": "English",
+    "items": [
+      {
+        "name": "Brand identity refresh",
+        "description": "Logo redesign, color palette and typography guidelines",
+        "quantity": 1,
+        "unitPrice": 3200,
+        "total": 3200
+      },
+      {
+        "name": "Website design & build",
+        "description": "Responsive 6-page marketing site with online ordering integration",
+        "quantity": 1,
+        "unitPrice": 6800,
+        "total": 6800
+      },
+      {
+        "name": "Packaging label design",
+        "description": "",
+        "quantity": 4,
+        "unitPrice": 450,
+        "total": 1800
+      }
+    ],
+    "paymentInformation": {
+      "bankName": "Demo Bank (sample)",
+      "accountName": "Northwind Studio LLC",
+      "accountNumber": "DEMO-0000-0000"
+    },
+    "taxDetails": {
+      "amount": 8.5,
+      "amountType": "percentage",
+      "taxID": ""
+    },
+    "subTotal": 11800,
+    "totalAmount": 12803,
+    "totalAmountInWords": "Twelve thousand, eight hundred three",
+    "additionalNotes": "Thank you for choosing Northwind Studio. Please include the invoice number with your payment.",
+    "paymentTerms": "Net 30",
+    "signature": { "data": "" },
+    "pdfTemplate": 3,
+    "theme": {
+      "accentColor": "#0F766E",
+      "fontId": "outfit",
+      "density": "comfortable"
+    }
+  }
+}
