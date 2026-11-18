@@ -1,0 +1,26 @@
+{
+  "AUD": {
+    "currency": "Australian Dollar",
+    "decimals": 2,
+    "beforeDecimal": "Dollar",
+    "afterDecimal": "Cent"
+  },
+  "CAD": {
+    "currency": "Canadian Dollar",
+    "decimals": 2,
+    "beforeDecimal": "Dollar",
+    "afterDecimal": "Cent"
+  },
+  "EUR": {
+    "currency": "Euro",
+    "decimals": 2,
+    "beforeDecimal": "Euro",
+    "afterDecimal": "Cent"
+  },
+  "USD": {
+    "currency": "United States Dollar",
+    "decimals": 2,
+    "beforeDecimal": "Dollar",
+    "afterDecimal": "Cent"
+  }
+}

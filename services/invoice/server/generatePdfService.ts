@@ -160,7 +160,7 @@ export async function generatePdfService(req: NextRequest) {
  * boundary and is keyed on the full validated body.
  */
 function pdfResponse(pdf: Uint8Array, cacheHit: boolean) {
-    return new NextResponse(pdf, {
+    return new NextResponse(pdf as Uint8Array<ArrayBuffer>, {
         headers: {
             "Content-Type": "application/pdf",
             "Content-Disposition": "inline; filename=invoice.pdf",

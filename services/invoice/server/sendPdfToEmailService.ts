@@ -134,7 +134,7 @@ export async function sendPdfToEmailService(
     }
 
     // Get email html content
-    const emailHTML = render(SendPdfEmail({ invoiceNumber }));
+    const emailHTML = await render(SendPdfEmail({ invoiceNumber }));
 
     try {
         const mailOptions: SendMailOptions = {
